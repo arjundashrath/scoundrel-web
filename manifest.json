@@ -1,7 +1,8 @@
 {
   "name": "Scoundrel",
   "short_name": "Scoundrel",
-  "start_url": ".",
+  "start_url": "/scoundrel-web/",
+  "scope": "/scoundrel-web/",
   "display": "standalone",
   "background_color": "#121212",
   "theme_color": "#121212",
