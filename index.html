@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#020617" />
+
+  <title>Scoundrel</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div id="app">
+
+    <!-- MENU -->
+    <section id="menu-screen" class="screen active">
+      <h1>Scoundrel</h1>
+      <p class="subtitle">Survive the deck</p>
+
+      <button id="start-btn">Start New Game</button>
+
+      <button id="resume-btn" class="secondary hidden">
+        Resume Game
+      </button>
+    </section>
+
+    <!-- GAME -->
+    <section id="game-screen" class="screen">
+      <header>
+        <div class="stat">❤️ <span id="health">20</span></div>
+        <div class="stat">🗡 <span id="weapon">0</span></div>
+        <div class="stat">🃏 <span id="deck">52</span></div>
+      </header>
+
+      <main id="table"></main>
+
+      <footer id="message">Choose a card</footer>
+    </section>
+
+    <!-- END -->
+    <section id="end-screen" class="screen">
+      <h2 id="end-title"></h2>
+      <p id="end-text"></p>
+
+      <button id="restart-btn">Play Again</button>
+    </section>
+
+  </div>
+
+  <script src="game.js"></script>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+</body>
+</html>

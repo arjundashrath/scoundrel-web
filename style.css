@@ -1,0 +1,134 @@
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1e293b, #020617);
+  color: #e5e7eb;
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 2rem 1.5rem;
+}
+
+.screen.active {
+  display: flex;
+  flex-direction: column;
+}
+
+/* MENU / END */
+
+#menu-screen,
+#end-screen {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  opacity: 0.7;
+  margin-bottom: 3rem;
+}
+
+h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+button {
+  font-size: 1.1rem;
+  padding: 1rem 2.5rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #052e16;
+  box-shadow: 0 10px 30px rgba(34,197,94,0.35);
+}
+
+button.secondary {
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  color: #020617;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.hidden {
+  display: none;
+}
+
+/* GAME */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.stat {
+  background: rgba(255,255,255,0.08);
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+#table {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.card {
+  background: linear-gradient(180deg, #0f172a, #020617);
+  border-radius: 18px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  animation: fadeIn 0.25s ease;
+}
+
+.card:active {
+  transform: translateY(4px) scale(0.97);
+}
+
+.type {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
+
+.value {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-top: 0.5rem;
+}
+
+.card.monster { border: 2px solid #dc2626; }
+.card.weapon  { border: 2px solid #2563eb; }
+.card.health  { border: 2px solid #16a34a; }
+
+footer {
+  text-align: center;
+  opacity: 0.8;
+  margin-top: 1rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
