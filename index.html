@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#020617" />
   <title>Scoundrel</title>
-
-  <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -16,7 +13,7 @@
   <!-- MENU -->
   <section id="menu" class="screen active">
     <h1>Scoundrel</h1>
-    <p class="subtitle">Survive the deck</p>
+    <p class="subtitle">Survive the dungeon</p>
 
     <select id="difficulty">
       <option value="easy">Easy</option>
@@ -24,56 +21,48 @@
       <option value="hard">Hard</option>
     </select>
 
-    <button id="start">New Game</button>
-    <button id="resume" class="secondary hidden">Resume</button>
-
-    <div id="stats"></div>
+    <button id="start">Start Game</button>
   </section>
 
   <!-- GAME -->
   <section id="game" class="screen">
-    <header>
-      <div class="stat">❤️ <span id="health"></span></div>
-      <div class="stat">🗡 <span id="weapon"></span></div>
-      <div class="stat">🃏 <span id="deck"></span></div>
-      <div class="stat">⭐ <span id="score"></span></div>
-    </header>
 
-    <main id="table"></main>
-    <footer id="message"></footer>
+    <!-- STATS BAR -->
+    <div id="stats-bar">
+      <div class="stat"><img src="icons/health.png"><span id="health"></span></div>
+      <div class="stat"><img src="icons/sword.png"><span id="weapon"></span></div>
+      <div class="stat"><img src="icons/card.png"><span id="deck"></span></div>
+      <div class="stat"><img src="icons/check.png"><span id="score"></span></div>
+    </div>
+
+    <main id="room"></main>
+
+    <footer>
+      <div class="run-controls">
+        <button id="run">Run</button>
+        <span id="run-status" class="run-available">RUN AVAILABLE</span>
+      </div>
+    </footer>
   </section>
 
   <!-- END -->
   <section id="end" class="screen">
     <h2 id="end-title"></h2>
-    <p id="end-text"></p>
-    <div id="run-stats"></div>
-    <button id="restart">Play Again</button>
+    <p id="end-score"></p>
+    <button onclick="location.reload()">Restart</button>
   </section>
 
-  <!-- TUTORIAL OVERLAY -->
+  <!-- TUTORIAL -->
   <div id="tutorial" class="overlay hidden">
     <div class="tutorial-box">
-      <h2>How Weapons Work</h2>
-      <p>
-        🗡 A weapon can be used on <b>consecutive monsters</b><br>
-        whose values are <b>equal or lower</b>.
-      </p>
-      <p>
-        <span class="legend good"></span> Green border → weapon applies<br>
-        <span class="legend bad"></span> Red border → weapon breaks (full damage)
-      </p>
-      <p class="hint">Tap anywhere to continue</p>
+      <h2 id="tutorial-title"></h2>
+      <p id="tutorial-text"></p>
+      <button id="tutorial-next">Next</button>
     </div>
   </div>
 
 </div>
 
 <script src="game.js"></script>
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
-  }
-</script>
 </body>
 </html>

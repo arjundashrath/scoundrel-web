@@ -1,272 +1,241 @@
-const SAVE_KEY = "scoundrel-save";
+const MAX_HEALTH = { easy:24, normal:20, hard:18 };
 const STATS_KEY = "scoundrel-stats";
-const TUTORIAL_KEY = "scoundrel-tutorial-shown";
 
-/* Difficulty */
-const DIFFICULTY = {
-  easy:   { maxHealth:24, monsters:26, weapons:14, health:12, bias:"low" },
-  normal: { maxHealth:20, monsters:30, weapons:10, health:12, bias:"normal" },
-  hard:   { maxHealth:18, monsters:34, weapons:8,  health:10, bias:"high" }
+let deck = [];
+let room = [];
+let carry = null;
+let canRun = true;
+let difficulty = "normal";
+
+let stats = JSON.parse(localStorage.getItem(STATS_KEY)) || { bestScore: 0 };
+
+let player = {
+  health: 20,
+  weapon: null,
+  score: 0
 };
 
-/* Screens */
-const menu = document.getElementById("menu");
-const game = document.getElementById("game");
-const end = document.getElementById("end");
-const tutorial = document.getElementById("tutorial");
+const roomEl = document.getElementById("room");
+const runStatusEl = document.getElementById("run-status");
 
-/* UI */
-const healthEl = document.getElementById("health");
-const weaponEl = document.getElementById("weapon");
-const deckEl = document.getElementById("deck");
-const scoreEl = document.getElementById("score");
-const tableEl = document.getElementById("table");
-const messageEl = document.getElementById("message");
-const statsEl = document.getElementById("stats");
-const runStatsEl = document.getElementById("run-stats");
+document.getElementById("start").onclick = startGame;
+document.getElementById("run").onclick = runRoom;
 
-/* Controls */
-const diffSelect = document.getElementById("difficulty");
-const startBtn = document.getElementById("start");
-const resumeBtn = document.getElementById("resume");
-const restartBtn = document.getElementById("restart");
+/* ---------- SETUP ---------- */
 
-/* End */
-const endTitle = document.getElementById("end-title");
-const endText = document.getElementById("end-text");
-
-/* State */
-let cfg, player, deck, table, lastWeaponUse, run;
-
-/* Persistent stats */
-let meta = JSON.parse(localStorage.getItem(STATS_KEY)) || {
-  runs:0, wins:0, losses:0, bestScore:0, bestClear:0
-};
-
-renderStats();
-
-/* Init */
-if (localStorage.getItem(SAVE_KEY)) resumeBtn.classList.remove("hidden");
-
-startBtn.onclick = () => newGame(diffSelect.value);
-resumeBtn.onclick = loadGame;
-restartBtn.onclick = () => newGame(diffSelect.value);
-
-tutorial.onclick = () => {
-  tutorial.classList.add("hidden");
-  localStorage.setItem(TUTORIAL_KEY, "1");
-};
-
-function show(s) {
-  [menu, game, end].forEach(x => x.classList.remove("active"));
-  s.classList.add("active");
-}
-
-/* ---------- Game ---------- */
-
-function newGame(diff) {
-  cfg = DIFFICULTY[diff];
-  player = { health: cfg.maxHealth, weapon: 0 };
-  lastWeaponUse = null;
-
-  run = { monsters:0, damage:0, healed:0, weaponsBroken:0, cardsCleared:0, score:0 };
-
-  deck = [];
-  table = [];
-
-  add("monster", cfg.monsters);
-  add("weapon", cfg.weapons);
-  add("health", cfg.health);
+function startGame() {
+  difficulty = document.getElementById("difficulty").value;
+  buildDeck();
   shuffle(deck);
 
-  deal();
-  save();
-  show(game);
-  updateUI();
+  player.health = MAX_HEALTH[difficulty];
+  player.weapon = null;
+  player.score = 0;
 
-  if (!localStorage.getItem(TUTORIAL_KEY)) {
-    tutorial.classList.remove("hidden");
-  }
+  carry = null;
+  canRun = true;
+  updateRunStatus();
+
+  drawRoom();
+  updateUI();
+  show("game");
+  maybeTutorial();
 }
 
-/* Deck */
+function buildDeck() {
+  deck = [];
+  const cfg = {
+    easy:   { m:14, w:12, h:10 },
+    normal: { m:18, w:8,  h:10 },
+    hard:   { m:22, w:6,  h:8 }
+  }[difficulty];
+
+  add("monster", cfg.m);
+  add("weapon", cfg.w);
+  add("health", cfg.h);
+}
 
 function add(type, count) {
   for (let i = 0; i < count; i++) {
-    let value = rand(2,14);
-    if (cfg.bias === "low") value = rand(2,10);
-    if (cfg.bias === "high") value = rand(6,14);
-    deck.push({ type, value });
+    deck.push({ type, value: rand(2,14) });
   }
 }
 
-function shuffle(a) {
-  for (let i = 0; i < a.length; i++) {
-    const r = Math.floor(Math.random() * a.length);
-    [a[i], a[r]] = [a[r], a[i]];
+/* ---------- ROOM ---------- */
+
+function drawRoom() {
+  room = [];
+  if (carry) room.push(carry);
+  while (room.length < 4 && deck.length) {
+    room.push(deck.shift());
   }
+  renderRoom();
 }
 
-function deal() {
-  table.length = 0;
-  for (let i = 0; i < 4; i++) table.push(deck.pop());
+function runRoom() {
+  if (!canRun) return;
+  deck.push(...room);
+  room = [];
+  carry = null;
+  canRun = false;
+  updateRunStatus();
+  drawRoom();
 }
 
-/* Play */
+/* ---------- PLAY ---------- */
 
-function play(i) {
-  const c = table[i];
+function playCard(index) {
+  const c = room[index];
 
-  if (c.type === "monster") {
-    let dmg;
+  if (c.type === "monster") fightMonster(c);
+  if (c.type === "weapon") equipWeapon(c);
+  if (c.type === "health") heal(c);
 
-    if (player.weapon > 0) {
-      if (lastWeaponUse === null || c.value <= lastWeaponUse) {
-        dmg = Math.max(0, c.value - player.weapon);
-        lastWeaponUse = c.value;
-      } else {
-        dmg = c.value;
-        player.weapon = 0;
-        lastWeaponUse = null;
-        run.weaponsBroken++;
-      }
-    } else {
-      dmg = c.value;
-    }
+  room.splice(index, 1);
 
-    player.health -= dmg;
-    run.damage += dmg;
-    run.monsters++;
+  if (room.length === 1) {
+    carry = room[0];
+    canRun = true;
+    updateRunStatus();
+    drawRoom();
+  } else {
+    renderRoom();
   }
 
-  if (c.type === "weapon") {
-    player.weapon = c.value;
-    lastWeaponUse = null;
-  }
-
-  if (c.type === "health") {
-    const before = player.health;
-    player.health = Math.min(cfg.maxHealth, player.health + c.value);
-    run.healed += player.health - before;
-  }
-
-  run.cardsCleared++;
-  table[i] = deck.pop();
-  updateScore();
-  save();
   updateUI();
   checkEnd();
 }
 
-/* UI */
+function fightMonster(c) {
+  let damage = c.value;
 
-function updateUI() {
-  healthEl.textContent = player.health;
-  weaponEl.textContent = player.weapon || "-";
-  deckEl.textContent = deck.length;
-  scoreEl.textContent = run.score;
+  if (player.weapon) {
+    if (player.weapon.durability === null || c.value <= player.weapon.durability) {
+      damage = Math.max(0, c.value - player.weapon.power);
+      player.weapon.durability = c.value - 1;
+    } else {
+      player.weapon = null;
+    }
+  }
 
-  tableEl.innerHTML = "";
-  table.forEach((c, i) => {
+  player.health -= damage;
+  player.score += Math.max(0, 10 - damage);
+}
+
+function equipWeapon(c) {
+  player.weapon = { power: c.value, durability: null };
+}
+
+function heal(c) {
+  player.health = Math.min(MAX_HEALTH[difficulty], player.health + c.value);
+}
+
+/* ---------- UI ---------- */
+
+function renderRoom() {
+  roomEl.innerHTML = "";
+  room.forEach((c, i) => {
     const el = document.createElement("div");
     el.className = `card ${c.type}`;
+    el.style.setProperty("--bg", `url(icons/${c.type}${rand(1,3)}.png)`);
 
-    let hint = "";
-
-    if (c.type === "monster") {
-      let dmg = c.value;
-
-      if (player.weapon > 0) {
-        if (lastWeaponUse === null || c.value <= lastWeaponUse) {
-          dmg = Math.max(0, c.value - player.weapon);
-          el.classList.add("usable");
-          hint = `🗡 ${dmg} dmg`;
-        } else {
-          el.classList.add("breaks");
-          hint = `💥 ${c.value} dmg`;
-        }
+    if (c.type === "monster" && player.weapon) {
+      if (player.weapon.durability === null || c.value <= player.weapon.durability) {
+        el.classList.add("usable");
       } else {
-        hint = `🩸 ${c.value} dmg`;
+        el.classList.add("breaks");
       }
     }
 
     el.innerHTML = `
-      <div class="type">${c.type}</div>
-      <div class="value">${c.value}</div>
-      ${hint ? `<div class="hint">${hint}</div>` : ""}
+      <div class="card-type">${c.type.toUpperCase()}</div>
+      <div class="card-value">${c.value}</div>
     `;
-    el.onclick = () => play(i);
-    tableEl.appendChild(el);
+
+    el.onclick = () => playCard(i);
+    roomEl.appendChild(el);
   });
 }
 
-/* Score */
-
-function updateScore() {
-  run.score =
-    run.monsters * 10 +
-    run.cardsCleared * 2 -
-    run.damage +
-    run.healed;
+function updateUI() {
+  document.getElementById("health").textContent = player.health;
+  document.getElementById("weapon").textContent =
+    player.weapon ? `${player.weapon.power}/${player.weapon.durability ?? "∞"}` : "-";
+  document.getElementById("deck").textContent = deck.length;
+  document.getElementById("score").textContent = player.score;
 }
 
-/* End */
+/* ---------- RUN STATUS ---------- */
+
+function updateRunStatus() {
+  runStatusEl.textContent = canRun ? "RUN AVAILABLE" : "RUN USED";
+  runStatusEl.className = canRun ? "run-available" : "run-used";
+}
+
+/* ---------- END ---------- */
 
 function checkEnd() {
-  if (player.health <= 0) finish(false);
-  if (deck.length === 0) finish(true);
+  if (player.health <= 0) finish("Game Over");
+  if (deck.length === 0 && room.length === 0) finish("Victory");
 }
 
-function finish(win) {
-  meta.runs++;
-  win ? meta.wins++ : meta.losses++;
-  meta.bestScore = Math.max(meta.bestScore, run.score);
-  meta.bestClear = Math.max(meta.bestClear, run.cardsCleared);
-  localStorage.setItem(STATS_KEY, JSON.stringify(meta));
-  localStorage.removeItem(SAVE_KEY);
+function finish(text) {
+  stats.bestScore = Math.max(stats.bestScore, player.score);
+  localStorage.setItem(STATS_KEY, JSON.stringify(stats));
 
-  endTitle.textContent = win ? "🎉 Victory" : "💀 Game Over";
-  endText.textContent = `Score: ${run.score}`;
-
-  runStatsEl.innerHTML = `
-    Monsters: ${run.monsters}<br>
-    Damage Taken: ${run.damage}<br>
-    Healing: ${run.healed}<br>
-    Weapons Broken: ${run.weaponsBroken}
-  `;
-
-  renderStats();
-  show(end);
+  document.getElementById("end-title").textContent = text;
+  document.getElementById("end-score").textContent = `Score: ${player.score}`;
+  show("end");
 }
 
-/* Save */
+/* ---------- TUTORIAL ---------- */
 
-function save() {
-  localStorage.setItem(SAVE_KEY,
-    JSON.stringify({ player, deck, table, lastWeaponUse, run, cfg })
-  );
+const tutorialSteps = [
+  ["Goal", "Survive the dungeon by managing health and weapons."],
+  ["Rooms", "Each room has 4 cards. You may run once per room."],
+  ["Weapons", "Weapons weaken after each monster fought."],
+  ["Win", "Clear the deck without dying."]
+];
+
+let tStep = 0;
+
+function maybeTutorial() {
+  if (localStorage["scoundrel-tutorial"]) return;
+  showTutorial();
 }
 
-function loadGame() {
-  const d = JSON.parse(localStorage.getItem(SAVE_KEY));
-  ({ player, deck, table, lastWeaponUse, run, cfg } = d);
-  show(game);
-  updateUI();
+function showTutorial() {
+  document.getElementById("tutorial").classList.remove("hidden");
+  renderTutorial();
 }
 
-/* Stats */
+document.getElementById("tutorial-next").onclick = () => {
+  tStep++;
+  if (tStep >= tutorialSteps.length) {
+    localStorage["scoundrel-tutorial"] = "1";
+    document.getElementById("tutorial").classList.add("hidden");
+  } else renderTutorial();
+};
 
-function renderStats() {
-  statsEl.innerHTML = `
-    Runs: ${meta.runs}<br>
-    Wins: ${meta.wins}<br>
-    Best Score: ${meta.bestScore}<br>
-    Best Clear: ${meta.bestClear}
-  `;
+function renderTutorial() {
+  document.getElementById("tutorial-title").textContent = tutorialSteps[tStep][0];
+  document.getElementById("tutorial-text").textContent = tutorialSteps[tStep][1];
 }
 
-/* Util */
+/* ---------- UTIL ---------- */
 
-function rand(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+function show(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+}
+
+function rand(a,b) {
+  return Math.floor(Math.random() * (b - a + 1)) + a;
 }
