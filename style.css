@@ -1,6 +1,8 @@
+/* ---------- RESET ---------- */
+
 * {
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
@@ -9,6 +11,8 @@ body {
   background: radial-gradient(circle at top, #1e293b, #020617);
   color: #e5e7eb;
 }
+
+/* ---------- SCREENS ---------- */
 
 .screen {
   display: none;
@@ -21,10 +25,10 @@ body {
   flex-direction: column;
 }
 
-/* MENU / END */
+/* ---------- MENU / END ---------- */
 
-#menu-screen,
-#end-screen {
+#menu,
+#end {
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -37,21 +41,30 @@ h1 {
 
 .subtitle {
   opacity: 0.7;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 }
 
-h2 {
-  font-size: 2.2rem;
-  margin-bottom: 1rem;
-}
+/* Difficulty select */
 
-button {
-  font-size: 1.1rem;
-  padding: 1rem 2.5rem;
+select {
+  padding: 0.8rem 1.4rem;
   border-radius: 999px;
   border: none;
-  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+  background: #020617;
+  color: #e5e7eb;
+}
+
+/* Buttons */
+
+button {
   margin-top: 1rem;
+  padding: 1rem 2.6rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
   background: linear-gradient(135deg, #22c55e, #16a34a);
   color: #052e16;
   box-shadow: 0 10px 30px rgba(34,197,94,0.35);
@@ -67,10 +80,10 @@ button:active {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
-/* GAME */
+/* ---------- GAME HEADER ---------- */
 
 header {
   display: flex;
@@ -83,7 +96,10 @@ header {
   padding: 0.6rem 1rem;
   border-radius: 999px;
   font-weight: 600;
+  font-size: 0.95rem;
 }
+
+/* ---------- TABLE ---------- */
 
 #table {
   flex: 1;
@@ -92,6 +108,8 @@ header {
   gap: 1rem;
 }
 
+/* ---------- CARDS ---------- */
+
 .card {
   background: linear-gradient(180deg, #0f172a, #020617);
   border-radius: 18px;
@@ -99,7 +117,8 @@ header {
   text-align: center;
   cursor: pointer;
   box-shadow: 0 12px 30px rgba(0,0,0,0.6);
-  animation: fadeIn 0.25s ease;
+  animation: fadeIn 0.2s ease;
+  border: 2px solid transparent;
 }
 
 .card:active {
@@ -107,28 +126,128 @@ header {
 }
 
 .type {
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
   opacity: 0.6;
 }
 
 .value {
   font-size: 3rem;
   font-weight: 800;
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
 }
 
-.card.monster { border: 2px solid #dc2626; }
-.card.weapon  { border: 2px solid #2563eb; }
-.card.health  { border: 2px solid #16a34a; }
+.hint {
+  margin-top: 0.4rem;
+  font-size: 0.7rem;
+  opacity: 0.75;
+}
+
+/* Card types */
+
+.card.monster {
+  border-color: #7f1d1d;
+}
+
+.card.weapon {
+  border-color: #1e3a8a;
+}
+
+.card.health {
+  border-color: #14532d;
+}
+
+/* ---------- WEAPON PREVIEW ---------- */
+
+.card.usable {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34,197,94,0.35);
+}
+
+.card.breaks {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 2px rgba(220,38,38,0.35);
+}
+
+/* ---------- FOOTER ---------- */
 
 footer {
   text-align: center;
-  opacity: 0.8;
+  opacity: 0.85;
   margin-top: 1rem;
+  font-size: 0.9rem;
 }
 
+/* ---------- TUTORIAL OVERLAY ---------- */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+.overlay.hidden {
+  display: none;
+  pointer-events: none;
+}
+
+.tutorial-box {
+  background: #020617;
+  border-radius: 18px;
+  padding: 2rem;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+}
+
+.tutorial-box h2 {
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
+}
+
+.tutorial-box p {
+  font-size: 0.95rem;
+  opacity: 0.85;
+  margin-bottom: 0.6rem;
+}
+
+.legend {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.legend.good {
+  background: #22c55e;
+}
+
+.legend.bad {
+  background: #dc2626;
+}
+
+.tutorial-box .hint {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+/* ---------- ANIMATIONS ---------- */
+
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to   { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
