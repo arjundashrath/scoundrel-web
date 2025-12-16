@@ -2,6 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PTHG0M139J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PTHG0M139J', { anonymize_ip: true });
+  </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Scoundrel</title>
   <link rel="stylesheet" href="style.css" />
@@ -13,12 +23,9 @@
 
   <!-- MENU -->
   <section id="menu" class="screen active">
-    <!-- TITLE IMAGE -->
     <img src="scoundrel.png" alt="Scoundrel" class="menu-title">
-
     <p class="subtitle">Survive the dungeon</p>
 
-    <!-- STATIC TUTORIAL -->
     <div id="tutorial-text">
       <h3>How to Play</h3>
       <p>You begin with <strong>20 health</strong>. Each room reveals <strong>4 cards</strong>. You must resolve <strong>3</strong>.</p>
@@ -37,7 +44,6 @@
 
   <!-- GAME -->
   <section id="game" class="screen">
-
     <div id="stats-bar">
       <div class="stat"><img src="icons/health.png"><span id="health"></span></div>
       <div class="stat"><img src="icons/sword.png"><span id="weapon"></span></div>
@@ -64,7 +70,6 @@
 
       <button id="back-menu">Menu</button>
     </footer>
-
   </section>
 
   <!-- END -->
