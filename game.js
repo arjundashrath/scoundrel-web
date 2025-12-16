@@ -291,7 +291,7 @@ function updateUI() {
   document.getElementById("deck").textContent = deck.length;
   document.getElementById("weapon").textContent =
     player.weapon
-      ? `${player.weapon.power} (≤ ${player.weapon.lastSlain ?? "∞"})`
+      ? `${player.weapon.power} (Effective Against Monsters ≤ ${player.weapon.lastSlain ?? "∞"})`
       : "-";
   runStatusEl.textContent = canRun ? "RUN AVAILABLE" : "RUN USED";
 }

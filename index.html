@@ -13,17 +13,20 @@
 
   <!-- MENU -->
   <section id="menu" class="screen active">
-    <h1>Scoundrel</h1>
+    <!-- TITLE IMAGE -->
+    <img src="scoundrel.png" alt="Scoundrel" class="menu-title">
+
     <p class="subtitle">Survive the dungeon</p>
 
+    <!-- STATIC TUTORIAL -->
     <div id="tutorial-text">
       <h3>How to Play</h3>
-      <p>You begin with <strong>20 health</strong>. Each room reveals <strong>4 cards</strong>; resolve <strong>3</strong>.</p>
+      <p>You begin with <strong>20 health</strong>. Each room reveals <strong>4 cards</strong>. You must resolve <strong>3</strong>.</p>
       <p><strong>Monsters</strong> deal damage equal to their strength.</p>
-      <p><strong>Weapons</strong> reduce damage, but once used, can only defeat monsters of equal or lower strength.</p>
-      <p><strong>Health potions</strong>: only <strong>one per room</strong>.</p>
+      <p><strong>Weapons</strong> reduce damage, but once a weapon kills a monster, it can only kill monsters of <strong>equal or lower strength</strong>.</p>
+      <p><strong>Health potions</strong> restore health, but you may drink only <strong>one per room</strong>.</p>
       <p>You may <strong>avoid a room</strong>, but never twice in a row.</p>
-      <p>Reach <strong>0 health</strong> and you lose. Clear the dungeon to win.</p>
+      <p>If your health reaches <strong>0</strong>, you lose. If you clear the dungeon, remaining health is your score.</p>
     </div>
 
     <button id="resume" class="hidden">Resume Game</button>
@@ -61,6 +64,7 @@
 
       <button id="back-menu">Menu</button>
     </footer>
+
   </section>
 
   <!-- END -->
