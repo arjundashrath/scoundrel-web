@@ -133,6 +133,7 @@ function drawRoom() {
 
 function runRoom() {
   if (!canRun) return;
+  if (deck.length === 0) return;
 
   deck = deck.concat(room);
   room = [];
@@ -302,9 +303,19 @@ function updateLog() {
 /* ---------- END ---------- */
 
 function checkEnd() {
-  if (player.health <= 0) return endGame(false);
-  if (deck.length + room.length <= 3) return endGame(true);
+  // Loss condition (immediate)
+  if (player.health <= 0) {
+    endGame(false);
+    return;
+  }
+
+  // Win condition (strict tabletop parity)
+  if (deck.length === 0 && room.length === 0) {
+    endGame(true);
+    return;
+  }
 }
+
 
 function endGame(win) {
   localStorage.removeItem(SAVE_KEY);
