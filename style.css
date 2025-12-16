@@ -5,8 +5,7 @@ body {
   font-family: system-ui, sans-serif;
   color: #e5e7eb;
   background:
-    linear-gradient(rgba(2,6,23,0.85), rgba(2,6,23,0.85)),
-    url("background.png") center / cover no-repeat fixed;
+    url("background.webp") center / cover no-repeat fixed;
 }
 
 .hidden { display: none; }

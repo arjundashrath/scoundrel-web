@@ -272,7 +272,7 @@ function renderRoom() {
   room.forEach((c, i) => {
     const el = document.createElement("div");
     el.className = `card ${c.type}`;
-    el.style.setProperty("--bg", `url(icons/${c.type}${c.img}.png)`);
+    el.style.setProperty("--bg", `url(icons/${c.type}${c.img}.webp)`);
 
     if (c.type === "monster" && selectedMonster === i) el.classList.add("selected");
 
