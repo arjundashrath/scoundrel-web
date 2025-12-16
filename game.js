@@ -1,102 +1,228 @@
-const MAX_HEALTH = { easy:24, normal:20, hard:18 };
+const SAVE_KEY = "scoundrel-save";
 const STATS_KEY = "scoundrel-stats";
+const MAX_HEALTH = 20;
+
+/* ---------- STATE ---------- */
 
 let deck = [];
 let room = [];
 let carry = null;
 let canRun = true;
-let difficulty = "normal";
+let usedPotion = false;
+let selectedMonster = null;
+let logLines = [];
 
-let stats = JSON.parse(localStorage.getItem(STATS_KEY)) || { bestScore: 0 };
-
-let player = {
-  health: 20,
-  weapon: null,
-  score: 0
+const player = {
+  health: MAX_HEALTH,
+  weapon: null
 };
+
+const stats = JSON.parse(localStorage.getItem(STATS_KEY)) || {
+  bestScore: 0,
+  games: 0,
+  wins: 0,
+  losses: 0
+};
+
+/* ---------- DOM ---------- */
 
 const roomEl = document.getElementById("room");
 const runStatusEl = document.getElementById("run-status");
+const resumeBtn = document.getElementById("resume");
+const fightHandsBtn = document.getElementById("fight-hands");
+const fightWeaponBtn = document.getElementById("fight-weapon");
+const logEl = document.getElementById("log");
 
-document.getElementById("start").onclick = startGame;
+/* ---------- INIT ---------- */
+
+if (localStorage.getItem(SAVE_KEY)) {
+  resumeBtn.classList.remove("hidden");
+}
+
+renderMenuStats();
+
+document.getElementById("start").onclick = newGame;
+document.getElementById("resume").onclick = resumeGame;
 document.getElementById("run").onclick = runRoom;
 
-/* ---------- SETUP ---------- */
+/* ---------- GAME FLOW ---------- */
 
-function startGame() {
-  difficulty = document.getElementById("difficulty").value;
+function newGame() {
+  stats.games++;
+  saveStats();
+
   buildDeck();
   shuffle(deck);
 
-  player.health = MAX_HEALTH[difficulty];
+  player.health = MAX_HEALTH;
   player.weapon = null;
-  player.score = 0;
 
   carry = null;
   canRun = true;
-  updateRunStatus();
 
   drawRoom();
   updateUI();
   show("game");
-  maybeTutorial();
+  saveGame();
 }
+
+function resumeGame() {
+  const data = JSON.parse(localStorage.getItem(SAVE_KEY));
+  Object.assign(player, data.player);
+  deck = data.deck;
+  room = data.room;
+  carry = data.carry;
+  canRun = data.canRun;
+
+  updateUI();
+  renderRoom();
+  show("game");
+}
+
+/* ---------- DECK ---------- */
 
 function buildDeck() {
   deck = [];
-  const cfg = {
-    easy:   { m:14, w:12, h:10 },
-    normal: { m:18, w:8,  h:10 },
-    hard:   { m:22, w:6,  h:8 }
-  }[difficulty];
-
-  add("monster", cfg.m);
-  add("weapon", cfg.w);
-  add("health", cfg.h);
+  for (let i = 0; i < 26; i++) deck.push(card("monster"));
+  for (let i = 0; i < 9; i++) deck.push(card("weapon"));
+  for (let i = 0; i < 9; i++) deck.push(card("health"));
 }
 
-function add(type, count) {
-  for (let i = 0; i < count; i++) {
-    deck.push({ type, value: rand(2,14) });
-  }
+function card(type) {
+  return { type, value: rand(2,14), img: rand(1,3) };
 }
 
 /* ---------- ROOM ---------- */
 
 function drawRoom() {
+  usedPotion = false;
+  selectedMonster = null;
+  logLines = [];
+  updateLog();
+
   room = [];
   if (carry) room.push(carry);
-  while (room.length < 4 && deck.length) {
-    room.push(deck.shift());
-  }
+  while (room.length < 4 && deck.length) room.push(deck.shift());
+
+  updateActionButtons();
   renderRoom();
 }
 
 function runRoom() {
   if (!canRun) return;
-  deck.push(...room);
+  deck = deck.concat(room);
   room = [];
   carry = null;
   canRun = false;
-  updateRunStatus();
+
+  logLines.push("You avoided the room. The dungeon shifts ominously...");
+  updateLog();
+
   drawRoom();
+  updateUI();
+  saveGame();
 }
 
 /* ---------- PLAY ---------- */
 
-function playCard(index) {
-  const c = room[index];
+function playCard(i) {
+  const c = room[i];
 
-  if (c.type === "monster") fightMonster(c);
-  if (c.type === "weapon") equipWeapon(c);
-  if (c.type === "health") heal(c);
+  if (c.type === "monster") {
+    selectedMonster = selectedMonster === i ? null : i;
+    updateActionButtons();
+    renderRoom();
+    return;
+  }
 
-  room.splice(index, 1);
+  if (c.type === "weapon") equipWeapon(i);
+  if (c.type === "health") drinkPotion(i);
+}
 
+/* ---------- COMBAT ---------- */
+
+function fight(monster, useWeapon) {
+  let dmg = monster.value;
+  let msg;
+
+  if (useWeapon && player.weapon) {
+    dmg = Math.max(0, monster.value - player.weapon.power);
+    player.weapon.maxAllowed = monster.value;
+    msg = `Your weapon (${player.weapon.power}) cut down a monster of strength ${monster.value}. You lost ${dmg} health.`;
+  } else {
+    msg = `You crushed a monster of strength ${monster.value} with your bare hands, losing ${dmg} health.`;
+  }
+
+  player.health -= dmg;
+  logLines.push(msg);
+  updateLog();
+}
+
+/* ---------- CARDS ---------- */
+
+function equipWeapon(i) {
+  player.weapon = { power: room[i].value, maxAllowed: null };
+  logLines.push(`You equipped a weapon of power ${room[i].value}.`);
+  updateLog();
+  room.splice(i,1);
+  afterPlay();
+}
+
+function drinkPotion(i) {
+  if (!usedPotion) {
+    player.health = Math.min(MAX_HEALTH, player.health + room[i].value);
+    logLines.push(`You drank a potion and restored ${room[i].value} health.`);
+    usedPotion = true;
+  } else {
+    logLines.push("You discarded an extra potion. No effect.");
+  }
+  updateLog();
+  room.splice(i,1);
+  afterPlay();
+}
+
+/* ---------- ACTION BUTTONS ---------- */
+
+fightHandsBtn.onclick = () => {
+  if (selectedMonster === null) return;
+  const m = room[selectedMonster];
+  fight(m, false);
+  room.splice(selectedMonster,1);
+  selectedMonster = null;
+  afterPlay();
+};
+
+fightWeaponBtn.onclick = () => {
+  if (selectedMonster === null) return;
+  const m = room[selectedMonster];
+  fight(m, true);
+  room.splice(selectedMonster,1);
+  selectedMonster = null;
+  afterPlay();
+};
+
+function updateActionButtons() {
+  if (selectedMonster === null) {
+    fightHandsBtn.classList.add("hidden");
+    fightWeaponBtn.classList.add("hidden");
+    return;
+  }
+
+  fightHandsBtn.classList.remove("hidden");
+
+  if (player.weapon && canUseWeapon(room[selectedMonster])) {
+    fightWeaponBtn.classList.remove("hidden");
+  } else {
+    fightWeaponBtn.classList.add("hidden");
+  }
+}
+
+/* ---------- FLOW ---------- */
+
+function afterPlay() {
   if (room.length === 1) {
     carry = room[0];
     canRun = true;
-    updateRunStatus();
     drawRoom();
   } else {
     renderRoom();
@@ -104,50 +230,24 @@ function playCard(index) {
 
   updateUI();
   checkEnd();
-}
-
-function fightMonster(c) {
-  let damage = c.value;
-
-  if (player.weapon) {
-    if (player.weapon.durability === null || c.value <= player.weapon.durability) {
-      damage = Math.max(0, c.value - player.weapon.power);
-      player.weapon.durability = c.value - 1;
-    } else {
-      player.weapon = null;
-    }
-  }
-
-  player.health -= damage;
-  player.score += Math.max(0, 10 - damage);
-}
-
-function equipWeapon(c) {
-  player.weapon = { power: c.value, durability: null };
-}
-
-function heal(c) {
-  player.health = Math.min(MAX_HEALTH[difficulty], player.health + c.value);
+  saveGame();
 }
 
 /* ---------- UI ---------- */
 
 function renderRoom() {
   roomEl.innerHTML = "";
+
   room.forEach((c, i) => {
     const el = document.createElement("div");
     el.className = `card ${c.type}`;
-    el.style.setProperty("--bg", `url(icons/${c.type}${rand(1,3)}.png)`);
+    el.style.setProperty("--bg", `url(icons/${c.type}${c.img}.png)`);
 
-    if (c.type === "monster" && player.weapon) {
-      if (player.weapon.durability === null || c.value <= player.weapon.durability) {
-        el.classList.add("usable");
-      } else {
-        el.classList.add("breaks");
-      }
+    if (c.type === "monster" && selectedMonster === i) {
+      el.classList.add("selected");
     }
 
-    el.innerHTML = `
+    el.innerHTML += `
       <div class="card-type">${c.type.toUpperCase()}</div>
       <div class="card-value">${c.value}</div>
     `;
@@ -159,67 +259,69 @@ function renderRoom() {
 
 function updateUI() {
   document.getElementById("health").textContent = player.health;
-  document.getElementById("weapon").textContent =
-    player.weapon ? `${player.weapon.power}/${player.weapon.durability ?? "∞"}` : "-";
   document.getElementById("deck").textContent = deck.length;
-  document.getElementById("score").textContent = player.score;
+  document.getElementById("weapon").textContent =
+    player.weapon
+      ? `${player.weapon.power} (Effective against monsters ≤ ${player.weapon.maxAllowed ?? "∞"})`
+      : "-";
+  runStatusEl.textContent = canRun ? "RUN AVAILABLE" : "RUN USED";
 }
 
-/* ---------- RUN STATUS ---------- */
-
-function updateRunStatus() {
-  runStatusEl.textContent = canRun ? "RUN AVAILABLE" : "RUN USED";
-  runStatusEl.className = canRun ? "run-available" : "run-used";
+function updateLog() {
+  logEl.innerHTML = logLines.join("<br>");
 }
 
 /* ---------- END ---------- */
 
 function checkEnd() {
-  if (player.health <= 0) finish("Game Over");
-  if (deck.length === 0 && room.length === 0) finish("Victory");
+  if (player.health <= 0) return endGame(false);
+  if (deck.length === 0 && room.length <= 1) return endGame(true);
 }
 
-function finish(text) {
-  stats.bestScore = Math.max(stats.bestScore, player.score);
-  localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+function endGame(win) {
+  localStorage.removeItem(SAVE_KEY);
+  resumeBtn.classList.add("hidden");
 
-  document.getElementById("end-title").textContent = text;
-  document.getElementById("end-score").textContent = `Score: ${player.score}`;
+  let score;
+  if (win) {
+    score = player.health;
+    stats.wins++;
+  } else {
+    score = -deck.filter(c => c.type === "monster")
+      .reduce((s,m)=>s+m.value,0);
+    stats.losses++;
+  }
+
+  stats.bestScore = Math.max(stats.bestScore, score);
+  saveStats();
+
+  document.getElementById("end-title").textContent = win ? "Victory" : "Game Over";
+  document.getElementById("end-score").textContent = `Score: ${score}`;
+  document.getElementById("end-stats").innerHTML =
+    `Best: ${stats.bestScore}<br>
+     Games: ${stats.games}<br>
+     Wins: ${stats.wins} | Losses: ${stats.losses}`;
+
   show("end");
 }
 
-/* ---------- TUTORIAL ---------- */
+/* ---------- STORAGE ---------- */
 
-const tutorialSteps = [
-  ["Goal", "Survive the dungeon by managing health and weapons."],
-  ["Rooms", "Each room has 4 cards. You may run once per room."],
-  ["Weapons", "Weapons weaken after each monster fought."],
-  ["Win", "Clear the deck without dying."]
-];
-
-let tStep = 0;
-
-function maybeTutorial() {
-  if (localStorage["scoundrel-tutorial"]) return;
-  showTutorial();
+function saveGame() {
+  localStorage.setItem(SAVE_KEY, JSON.stringify({
+    player, deck, room, carry, canRun
+  }));
 }
 
-function showTutorial() {
-  document.getElementById("tutorial").classList.remove("hidden");
-  renderTutorial();
+function saveStats() {
+  localStorage.setItem(STATS_KEY, JSON.stringify(stats));
 }
 
-document.getElementById("tutorial-next").onclick = () => {
-  tStep++;
-  if (tStep >= tutorialSteps.length) {
-    localStorage["scoundrel-tutorial"] = "1";
-    document.getElementById("tutorial").classList.add("hidden");
-  } else renderTutorial();
-};
-
-function renderTutorial() {
-  document.getElementById("tutorial-title").textContent = tutorialSteps[tStep][0];
-  document.getElementById("tutorial-text").textContent = tutorialSteps[tStep][1];
+function renderMenuStats() {
+  document.getElementById("menu-stats").innerHTML =
+    `Best: ${stats.bestScore}<br>
+     Games: ${stats.games}<br>
+     Wins: ${stats.wins} | Losses: ${stats.losses}`;
 }
 
 /* ---------- UTIL ---------- */
@@ -236,6 +338,11 @@ function shuffle(a) {
   }
 }
 
-function rand(a,b) {
-  return Math.floor(Math.random() * (b - a + 1)) + a;
+function canUseWeapon(m) {
+  const w = player.weapon;
+  return w && (w.maxAllowed === null || m.value <= w.maxAllowed);
+}
+
+function rand(min,max) {
+  return Math.floor(Math.random()*(max-min+1))+min;
 }

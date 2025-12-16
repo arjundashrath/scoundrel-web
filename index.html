@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Scoundrel</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json">
 </head>
-
 <body>
+
 <div id="app">
 
   <!-- MENU -->
@@ -15,51 +16,55 @@
     <h1>Scoundrel</h1>
     <p class="subtitle">Survive the dungeon</p>
 
-    <select id="difficulty">
-      <option value="easy">Easy</option>
-      <option value="normal" selected>Normal</option>
-      <option value="hard">Hard</option>
-    </select>
+    <button id="resume" class="hidden">Resume Game</button>
+    <button id="start">New Game</button>
 
-    <button id="start">Start Game</button>
+    <div id="menu-stats"></div>
   </section>
 
   <!-- GAME -->
   <section id="game" class="screen">
 
-    <!-- STATS BAR -->
     <div id="stats-bar">
       <div class="stat"><img src="icons/health.png"><span id="health"></span></div>
       <div class="stat"><img src="icons/sword.png"><span id="weapon"></span></div>
       <div class="stat"><img src="icons/card.png"><span id="deck"></span></div>
-      <div class="stat"><img src="icons/check.png"><span id="score"></span></div>
     </div>
 
     <main id="room"></main>
 
-    <footer>
-      <div class="run-controls">
-        <button id="run">Run</button>
-        <span id="run-status" class="run-available">RUN AVAILABLE</span>
+    <!-- LOG -->
+    <div id="log"></div>
+
+    <!-- FOOTER -->
+    <footer id="game-footer">
+
+      <div id="run-box">
+        <button id="run">Avoid Room</button>
+        <div id="run-status"></div>
       </div>
+
+      <div id="actions">
+        <button id="fight-hands" class="hidden">
+          <img src="icons/health.png"> Hands
+        </button>
+
+        <button id="fight-weapon" class="hidden">
+          <img src="icons/sword.png"> Weapon
+        </button>
+      </div>
+
     </footer>
+
   </section>
 
   <!-- END -->
   <section id="end" class="screen">
     <h2 id="end-title"></h2>
     <p id="end-score"></p>
-    <button onclick="location.reload()">Restart</button>
+    <div id="end-stats"></div>
+    <button onclick="location.reload()">Back to Menu</button>
   </section>
-
-  <!-- TUTORIAL -->
-  <div id="tutorial" class="overlay hidden">
-    <div class="tutorial-box">
-      <h2 id="tutorial-title"></h2>
-      <p id="tutorial-text"></p>
-      <button id="tutorial-next">Next</button>
-    </div>
-  </div>
 
 </div>
 
