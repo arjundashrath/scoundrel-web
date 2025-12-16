@@ -16,6 +16,16 @@
     <h1>Scoundrel</h1>
     <p class="subtitle">Survive the dungeon</p>
 
+    <div id="tutorial-text">
+      <h3>How to Play</h3>
+      <p>You begin with <strong>20 health</strong>. Each room reveals <strong>4 cards</strong>; resolve <strong>3</strong>.</p>
+      <p><strong>Monsters</strong> deal damage equal to their strength.</p>
+      <p><strong>Weapons</strong> reduce damage, but once used, can only defeat monsters of equal or lower strength.</p>
+      <p><strong>Health potions</strong>: only <strong>one per room</strong>.</p>
+      <p>You may <strong>avoid a room</strong>, but never twice in a row.</p>
+      <p>Reach <strong>0 health</strong> and you lose. Clear the dungeon to win.</p>
+    </div>
+
     <button id="resume" class="hidden">Resume Game</button>
     <button id="start">New Game</button>
 
@@ -32,13 +42,9 @@
     </div>
 
     <main id="room"></main>
-
-    <!-- LOG -->
     <div id="log"></div>
 
-    <!-- FOOTER -->
     <footer id="game-footer">
-
       <div id="run-box">
         <button id="run">Avoid Room</button>
         <div id="run-status"></div>
@@ -48,14 +54,13 @@
         <button id="fight-hands" class="hidden">
           <img src="icons/health.png"> Hands
         </button>
-
         <button id="fight-weapon" class="hidden">
           <img src="icons/sword.png"> Weapon
         </button>
       </div>
 
+      <button id="back-menu">Menu</button>
     </footer>
-
   </section>
 
   <!-- END -->
