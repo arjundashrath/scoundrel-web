@@ -1,3 +1,5 @@
 android.keystore
 *.keystore
 *.jks
+*.aab
+*.apk
