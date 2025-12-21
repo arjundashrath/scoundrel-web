@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8" />
 
+  <!-- SEO -->
+  <title>Scoundrel Card Game Online – Play the Roguelike Dungeon Card Game</title>
+  <meta name="description"
+        content="Play Scoundrel card game online in your browser. A single-player roguelike dungeon crawler with monsters, weapons, and tough choices. No download required." />
+
   <!-- Google Analytics (GA4) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PTHG0M139J"></script>
   <script>
@@ -13,27 +18,144 @@
   </script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scoundrel</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#121212" />
+
   <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json">
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can I play Scoundrel card game online?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Scoundrel is playable online directly in your browser. No download or installation is required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need to install Scoundrel to play?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. You can play Scoundrel instantly in your browser without installing an app."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Scoundrel free to play?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Scoundrel is free to play online with no ads and no accounts required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Scoundrel a single-player game?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Scoundrel is a single-player roguelike dungeon card game focused on strategy and decision-making."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this the official Scoundrel card game?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "This is a browser-playable implementation inspired by the Scoundrel card game ruleset."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
+
 <body>
 
 <div id="app">
 
   <!-- MENU -->
   <section id="menu" class="screen active">
-    <img src="scoundrel.webp" alt="Scoundrel" class="menu-title">
+
+    <img src="scoundrel.webp" alt="Scoundrel Card Game" class="menu-title">
+
+    <!-- SEO-only H1 -->
+    <h1 class="sr-only">Play Scoundrel Card Game Online</h1>
+
     <p class="subtitle">Survive the dungeon</p>
 
     <div id="tutorial-text">
-      <h3>How to Play</h3>
-      <p>You begin with <strong>20 health</strong>. Each room reveals <strong>4 cards</strong>. You must resolve <strong>3</strong>.</p>
-      <p><strong>Monsters</strong> deal damage equal to their strength.</p>
-      <p><strong>Weapons</strong> reduce damage, but once a weapon kills a monster, it can only kill monsters of <strong>equal or lower strength</strong>.</p>
-      <p><strong>Health potions</strong> restore health, but you may drink only <strong>one per room</strong>.</p>
-      <p>You may <strong>avoid a room</strong>, but never twice in a row.</p>
-      <p>If your health reaches <strong>0</strong>, you lose. If you clear the dungeon, remaining health is your score.</p>
+
+      <!-- ONLINE POSITIONING -->
+      <p>
+        <strong>Scoundrel is a single-player roguelike dungeon card game you can play online in your browser.</strong>
+        Inspired by the original Scoundrel ruleset, the goal is to survive the dungeon with as much health as possible.
+      </p>
+
+      <h2>How to Play Scoundrel</h2>
+
+      <h3>Starting the Game</h3>
+      <p>
+        You begin with <strong>20 health</strong>. The dungeon is represented by a shuffled deck of cards.
+        Each turn, <strong>four cards</strong> are revealed to form a room.
+      </p>
+
+      <h3>The Cards</h3>
+      <p>
+        <strong>Monsters</strong> deal damage equal to their strength, ranging from <strong>2 to 14</strong>.
+      </p>
+      <p>
+        <strong>Weapons</strong> reduce the damage you take from monsters.
+        Equipping a new weapon replaces your previous one.
+      </p>
+      <p>
+        <strong>Health Potions</strong> restore health equal to their value.
+        You may drink <strong>only one potion per room</strong>, and your health cannot exceed 20.
+      </p>
+
+      <h3>Facing a Room</h3>
+      <p>
+        Each room contains four cards. You must resolve <strong>three of them</strong>,
+        leaving one card behind to carry forward into the next room.
+      </p>
+      <p>
+        You may choose to <strong>avoid a room</strong>, placing all four cards back into the dungeon.
+        However, you may <strong>not avoid two rooms in a row</strong>.
+      </p>
+
+      <h3>Combat Rules</h3>
+      <p>When facing a monster, you have two options:</p>
+      <ul>
+        <li>
+          <strong>Barehanded:</strong> Take damage equal to the monster’s full strength.
+        </li>
+        <li>
+          <strong>With a weapon:</strong> Subtract the weapon’s power from the monster’s value.
+          Any remaining damage is taken as health loss.
+        </li>
+      </ul>
+      <p>
+        Once a weapon is used to slay a monster, it becomes <strong>bound</strong>.
+        From that point on, it may only be used against monsters of
+        <strong>equal or lower strength</strong> than the last monster it defeated.
+      </p>
+
+      <h3>Winning and Losing</h3>
+      <ul>
+        <li>Your health reaches <strong>zero</strong> — you lose.</li>
+        <li>You clear the entire dungeon — you win.</li>
+      </ul>
+      <p>
+        If you win, your remaining health is your score.
+        Every decision matters — knowing when to fight, heal, or run is the heart of Scoundrel.
+      </p>
+
     </div>
 
     <button id="resume" class="hidden">Resume Game</button>
@@ -45,9 +167,9 @@
   <!-- GAME -->
   <section id="game" class="screen">
     <div id="stats-bar">
-      <div class="stat"><img src="icons/health.webp"><span id="health"></span></div>
-      <div class="stat"><img src="icons/sword.webp"><span id="weapon"></span></div>
-      <div class="stat"><img src="icons/card.webp"><span id="deck"></span></div>
+      <div class="stat"><img src="icons/health.webp" alt=""><span id="health"></span></div>
+      <div class="stat"><img src="icons/sword.webp" alt=""><span id="weapon"></span></div>
+      <div class="stat"><img src="icons/card.webp" alt=""><span id="deck"></span></div>
     </div>
 
     <main id="room"></main>
@@ -61,10 +183,10 @@
 
       <div id="actions">
         <button id="fight-hands" class="hidden">
-          <img src="icons/health.webp"> Hands
+          <img src="icons/health.webp" alt=""> Hands
         </button>
         <button id="fight-weapon" class="hidden">
-          <img src="icons/sword.webp"> Weapon
+          <img src="icons/sword.webp" alt=""> Weapon
         </button>
       </div>
 
