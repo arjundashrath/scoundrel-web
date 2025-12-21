@@ -3,3 +3,4 @@ android.keystore
 *.jks
 *.aab
 *.apk
+*.pem

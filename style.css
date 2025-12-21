@@ -1,14 +1,21 @@
-* { box-sizing: border-box; }
+/* ---------- RESET ---------- */
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
   color: #e5e7eb;
-  background:
-    url("background.webp") center / cover no-repeat fixed;
+  background: url("background.webp") center / cover no-repeat fixed;
 }
 
-.hidden { display: none; }
+.hidden {
+  display: none;
+}
+
+/* ---------- SCREENS ---------- */
 
 .screen {
   display: none;
@@ -21,15 +28,13 @@ body {
   flex-direction: column;
 }
 
-/* MENU */
+/* ---------- MENU ---------- */
 
 #menu {
   justify-content: center;
   align-items: center;
   text-align: center;
 }
-
-/* MENU TITLE IMAGE */
 
 .menu-title {
   max-width: 320px;
@@ -70,7 +75,7 @@ body {
   opacity: 0.8;
 }
 
-/* STATS */
+/* ---------- STATS BAR ---------- */
 
 #stats-bar {
   display: grid;
@@ -90,28 +95,47 @@ body {
   font-weight: 600;
 }
 
-.stat img { width: 16px; }
+.stat img {
+  width: 16px;
+}
 
-/* ROOM */
+/* ---------- ROOM / GRID ---------- */
 
 #room {
   margin-top: 0.75rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
+
+  /* Prevent cards collapsing or stretching on wide screens */
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* CARD */
+/* ---------- CARD ---------- */
 
 .card {
   position: relative;
-  height: 150px;
+
+  /* True square (matches 1024x1024 assets) */
+  aspect-ratio: 1 / 1;
+  width: 100%;
+
+  /* Prevent “dot” collapse */
+  min-width: 140px;
+
   border-radius: 16px;
-  background:
-    linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
-    var(--bg) center / contain no-repeat;
-  border: 2px solid transparent;
   cursor: pointer;
+
+  background:
+    linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)),
+    var(--bg) center / cover no-repeat;
+
+  border: 2px solid transparent;
+  overflow: hidden;
+
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
 }
 
 .card.monster { border-color: #7f1d1d; }
@@ -122,7 +146,19 @@ body {
   box-shadow: 0 0 0 3px #22c55e;
 }
 
-/* LABELS */
+/* Tap feedback (mobile) */
+.card:active {
+  transform: scale(0.97);
+}
+
+/* Hover feedback (desktop only) */
+@media (hover: hover) {
+  .card:hover {
+    box-shadow: 0 0 0 3px rgba(34,197,94,0.6);
+  }
+}
+
+/* ---------- CARD LABELS ---------- */
 
 .card-type {
   position: absolute;
@@ -130,6 +166,8 @@ body {
   left: 8px;
   font-size: 0.65rem;
   letter-spacing: 0.12em;
+  font-weight: 700;
+  
 }
 
 .card-value {
@@ -140,7 +178,7 @@ body {
   font-weight: 800;
 }
 
-/* LOG */
+/* ---------- LOG ---------- */
 
 #log {
   margin-top: 0.75rem;
@@ -151,7 +189,7 @@ body {
   min-height: 48px;
 }
 
-/* FOOTER */
+/* ---------- FOOTER ---------- */
 
 #game-footer {
   margin-top: 0.75rem;
@@ -196,7 +234,7 @@ body {
   width: 16px;
 }
 
-/* DISABLED */
+/* ---------- DISABLED ---------- */
 
 button.disabled {
   opacity: 0.45;
@@ -204,14 +242,16 @@ button.disabled {
   pointer-events: auto;
 }
 
-/* DESKTOP */
+/* ---------- DESKTOP LAYOUT ---------- */
 
 @media (min-width: 768px) {
-  #room { grid-template-columns: repeat(4, 1fr); }
-  .card { height: 180px; }
+  #room {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
-/* Screen-reader only (SEO + accessibility) */
+/* ---------- ACCESSIBILITY ---------- */
+
 .sr-only {
   position: absolute;
   width: 1px;
