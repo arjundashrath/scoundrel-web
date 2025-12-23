@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="canonical" href="https://scoundrelcardgame.net/" />
+  <link rel="canonical" href="https://scoundrelcardgame.net/" />
+  <link rel="icon" href="icons/webicon.png" />
 
   <meta charset="UTF-8" />
 
   <!-- SEO -->
   <title>Scoundrel Card Game Online – Play the Roguelike Dungeon Card Game</title>
   <meta name="description"
-        content="Play Scoundrel card game online in your browser. A single-player roguelike dungeon crawler with monsters, weapons, and tough choices. No download required." />
+    content="Play Scoundrel card game online in your browser. A single-player roguelike dungeon crawler with monsters, weapons, and tough choices. No download required." />
 
   <!-- Google Analytics (GA4) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PTHG0M139J"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-PTHG0M139J', { anonymize_ip: true });
   </script>
@@ -77,137 +79,159 @@
   }
   </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4687594072052674"
-     crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
 
-<div id="app">
+  <div id="app">
 
-  <!-- MENU -->
-  <section id="menu" class="screen active">
+    <!-- MENU -->
+    <section id="menu" class="screen active">
 
-    <img src="scoundrel.webp" alt="Scoundrel Card Game" class="menu-title">
+      <img src="scoundrel.webp" alt="Scoundrel Card Game" class="menu-title">
 
-    <!-- SEO-only H1 -->
-    <h1 class="sr-only">Play Scoundrel Card Game Online</h1>
+      <!-- SEO-only H1 -->
+      <h1 class="sr-only">Play Scoundrel Card Game Online</h1>
 
-    <p class="subtitle">Survive the dungeon</p>
+      <p class="subtitle">Survive the dungeon</p>
 
-    <div id="tutorial-text">
+      <div id="tutorial-text">
 
-      <!-- ONLINE POSITIONING -->
-      <p>
-        <strong>Scoundrel is a single-player roguelike dungeon card game you can play online in your browser.</strong>
-        Inspired by the original Scoundrel ruleset, the goal is to survive the dungeon with as much health as possible.
-      </p>
+        <!-- ONLINE POSITIONING -->
+        <p>
+          <strong>Scoundrel is a single-player roguelike dungeon card game you can play online in your browser.</strong>
+          Inspired by the original Scoundrel ruleset, the goal is to survive the dungeon with as much health as
+          possible.
+        </p>
 
-      <h2>How to Play Scoundrel</h2>
+        <h2>How to Play Scoundrel</h2>
 
-      <h3>Starting the Game</h3>
-      <p>
-        You begin with <strong>20 health</strong>. The dungeon is represented by a shuffled deck of cards.
-        Each turn, <strong>four cards</strong> are revealed to form a room.
-      </p>
+        <h3>Starting the Game</h3>
+        <p>
+          You begin with <strong>20 health</strong>. The dungeon is represented by a shuffled deck of cards.
+          Each turn, <strong>four cards</strong> are revealed to form a room.
+        </p>
 
-      <h3>The Cards</h3>
-      <p>
-        <strong>Monsters</strong> deal damage equal to their strength, ranging from <strong>2 to 14</strong>.
-      </p>
-      <p>
-        <strong>Weapons</strong> reduce the damage you take from monsters.
-        Equipping a new weapon replaces your previous one.
-      </p>
-      <p>
-        <strong>Health Potions</strong> restore health equal to their value.
-        You may drink <strong>only one potion per room</strong>, and your health cannot exceed 20.
-      </p>
+        <h3>The Cards</h3>
+        <p>
+          <strong>Monsters</strong> deal damage equal to their strength, ranging from <strong>2 to 14</strong>.
+        </p>
+        <p>
+          <strong>Weapons</strong> reduce the damage you take from monsters.
+          Equipping a new weapon replaces your previous one.
+        </p>
+        <p>
+          <strong>Health Potions</strong> restore health equal to their value.
+          You may drink <strong>only one potion per room</strong>, and your health cannot exceed 20.
+        </p>
 
-      <h3>Facing a Room</h3>
-      <p>
-        Each room contains four cards. You must resolve <strong>three of them</strong>,
-        leaving one card behind to carry forward into the next room.
-      </p>
-      <p>
-        You may choose to <strong>avoid a room</strong>, placing all four cards back into the dungeon.
-        However, you may <strong>not avoid two rooms in a row</strong>.
-      </p>
+        <h3>Facing a Room</h3>
+        <p>
+          Each room contains four cards. You must resolve <strong>three of them</strong>,
+          leaving one card behind to carry forward into the next room.
+        </p>
+        <p>
+          You may choose to <strong>avoid a room</strong>, placing all four cards back into the dungeon.
+          However, you may <strong>not avoid two rooms in a row</strong>.
+        </p>
 
-      <h3>Combat Rules</h3>
-      <p>When facing a monster, you have two options:</p>
-      <ul>
-        <li>
-          <strong>Barehanded:</strong> Take damage equal to the monster’s full strength.
-        </li>
-        <li>
-          <strong>With a weapon:</strong> Subtract the weapon’s power from the monster’s value.
-          Any remaining damage is taken as health loss.
-        </li>
-      </ul>
-      <p>
-        Once a weapon is used to slay a monster, it becomes <strong>bound</strong>.
-        From that point on, it may only be used against monsters of
-        <strong>equal or lower strength</strong> than the last monster it defeated.
-      </p>
+        <h3>Combat Rules</h3>
+        <p>When facing a monster, you have two options:</p>
+        <ul>
+          <li>
+            <strong>Barehanded:</strong> Take damage equal to the monster’s full strength.
+          </li>
+          <li>
+            <strong>With a weapon:</strong> Subtract the weapon’s power from the monster’s value.
+            Any remaining damage is taken as health loss.
+          </li>
+        </ul>
+        <p>
+          Once a weapon is used to slay a monster, it becomes <strong>bound</strong>.
+          From that point on, it may only be used against monsters of
+          <strong>equal or lower strength</strong> than the last monster it defeated.
+        </p>
 
-      <h3>Winning and Losing</h3>
-      <ul>
-        <li>Your health reaches <strong>zero</strong> — you lose.</li>
-        <li>You clear the entire dungeon — you win.</li>
-      </ul>
-      <p>
-        If you win, your remaining health is your score.
-        Every decision matters — knowing when to fight, heal, or run is the heart of Scoundrel.
-      </p>
+        <h3>Winning and Losing</h3>
+        <ul>
+          <li>Your health reaches <strong>zero</strong> — you lose.</li>
+          <li>You clear the entire dungeon — you win.</li>
+        </ul>
+        <p>
+          If you win, your remaining health is your score.
+          Every decision matters — knowing when to fight, heal, or run is the heart of Scoundrel.
+        </p>
 
-    </div>
-
-    <button id="resume" class="hidden">Resume Game</button>
-    <button id="start">New Game</button>
-
-    <div id="menu-stats"></div>
-  </section>
-
-  <!-- GAME -->
-  <section id="game" class="screen">
-    <div id="stats-bar">
-      <div class="stat"><img src="icons/health.webp" alt=""><span id="health"></span></div>
-      <div class="stat"><img src="icons/sword.webp" alt=""><span id="weapon"></span></div>
-      <div class="stat"><img src="icons/card.webp" alt=""><span id="deck"></span></div>
-    </div>
-
-    <main id="room"></main>
-    <div id="log"></div>
-
-    <footer id="game-footer">
-      <div id="run-box">
-        <button id="run">Avoid Room</button>
-        <div id="run-status"></div>
       </div>
 
-      <div id="actions">
-        <button id="fight-hands" class="hidden">
-          <img src="icons/health.webp" alt=""> Hands
-        </button>
-        <button id="fight-weapon" class="hidden">
-          <img src="icons/sword.webp" alt=""> Weapon
-        </button>
+      <div id="difficulty-select">
+        <span class="difficulty-label">Difficulty</span>
+        <div class="difficulty-options">
+          <button class="difficulty-btn" data-difficulty="easy">Easy</button>
+          <button class="difficulty-btn active" data-difficulty="normal">Normal</button>
+          <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+        </div>
       </div>
 
-      <button id="back-menu">Menu</button>
-    </footer>
-  </section>
+      <button id="resume" class="hidden">Resume Game</button>
+      <button id="start">New Game</button>
 
-  <!-- END -->
-  <section id="end" class="screen">
-    <h2 id="end-title"></h2>
-    <p id="end-score"></p>
-    <div id="end-stats"></div>
-    <button onclick="location.reload()">Back to Menu</button>
-  </section>
+      <div id="menu-stats"></div>
+    </section>
 
-</div>
+    <!-- GAME -->
+    <section id="game" class="screen">
+      <div id="stats-bar">
+        <div class="stat"><img src="icons/health.webp" alt=""><span id="health"></span></div>
+        <div class="stat"><img src="icons/sword.webp" alt=""><span id="weapon"></span></div>
+        <div class="stat"><img src="icons/card.webp" alt=""><span id="deck"></span></div>
+      </div>
 
-<script src="game.js"></script>
+      <main id="room"></main>
+      <div id="log"></div>
+
+      <footer id="game-footer">
+        <div id="run-box">
+          <button id="run">Avoid Room</button>
+          <div id="run-status"></div>
+        </div>
+
+        <div id="actions">
+          <button id="fight-hands" class="hidden">
+            <img src="icons/health.webp" alt=""> Hands
+          </button>
+          <button id="fight-weapon" class="hidden">
+            <img src="icons/sword.webp" alt=""> Weapon
+          </button>
+        </div>
+
+        <button id="back-menu" class="icon-btn" aria-label="Back to Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </button>
+
+      </footer>
+    </section>
+
+    <!-- END -->
+    <section id="end" class="screen">
+      <h2 id="end-title"></h2>
+      <p id="end-score"></p>
+      <div id="end-stats"></div>
+      <button onclick="location.reload()">Back to Menu</button>
+
+      <a href="https://buymeacoffee.com/scoundrelonline" target="_blank" id="support-link">
+        Want to support this and similar projects?
+      </a>
+    </section>
+
+  </div>
+
+  <script src="game.js"></script>
 </body>
+
 </html>
