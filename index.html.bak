@@ -228,7 +228,7 @@
       <button onclick="location.reload()">Back to Menu</button>
 
       <a href="https://buymeacoffee.com/scoundrelonline" target="_blank" id="support-link">
-        Want to support this and similar projects? Click here!
+        Want to support this and similar projects?
       </a>
     </section>
 

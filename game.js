@@ -137,11 +137,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ---------- DIFFICULTY SELECTION ---------- */
 
+  /* ---------- PRELOAD ASSETS ---------- */
+
+  const PRELOAD_IMAGES = [
+    "scoundrel.webp",
+    "background.webp",
+    "icons/card.webp",
+    "icons/health.webp",
+    "icons/sword.webp"
+  ];
+
+  ["monster", "weapon", "health"].forEach(type => {
+    for (let i = 1; i <= 3; i++) {
+      PRELOAD_IMAGES.push(`icons/${type}${i}.webp`);
+    }
+  });
+
+  PRELOAD_IMAGES.forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+
+  /* ---------- DIFFICULTY SELECTION ---------- */
+
   document.querySelectorAll(".difficulty-btn").forEach(btn => {
     btn.onclick = () => {
       document.querySelectorAll(".difficulty-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       currentDifficulty = btn.dataset.difficulty;
+      newGame();
     };
   });
 
