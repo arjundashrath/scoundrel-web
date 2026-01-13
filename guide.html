@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoundrel Strategy Guide & Rules – How to Win</title>
+    <meta name="description"
+        content="Complete strategy guide, rules, and tips for Scoundrel card game. Learn how to manage your health, use weapons effectively, and clear the dungeon." />
+    <link rel="canonical" href="https://scoundrelcardgame.net/guide.html" />
+    <link rel="icon" href="icons/webicon.png" />
+
+    <!-- Shared Styles -->
+    <style>
+        :root {
+            --color-bg: #0a0a0f;
+            --color-surface: #14141e;
+            --color-text: #e5e7eb;
+            --color-text-muted: #9ca3af;
+            --color-primary: #fbbf24;
+            --color-monster: #ef4444;
+            --color-weapon: #3b82f6;
+            --color-health: #22c55e;
+            --font-main: 'Inter', system-ui, sans-serif;
+            --font-heading: 'Cinzel', serif;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-main);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: var(--font-heading);
+            color: #f3f4f6;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--color-text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 1px solid #374151;
+            padding-bottom: 0.5rem;
+            color: var(--color-primary);
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #e5e7eb;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            color: var(--color-text-muted);
+        }
+
+        strong {
+            color: #f3f4f6;
+        }
+
+        ul,
+        ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--color-text-muted);
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .card-ref {
+            font-weight: 700;
+            padding: 0.1em 0.3em;
+            border-radius: 4px;
+        }
+
+        .ref-monster {
+            color: var(--color-monster);
+        }
+
+        .ref-weapon {
+            color: var(--color-weapon);
+        }
+
+        .ref-health {
+            color: var(--color-health);
+        }
+
+        .tip-box {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 4px solid var(--color-primary);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+
+        .tip-title {
+            font-weight: 700;
+            color: var(--color-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+            font-family: var(--font-heading);
+        }
+
+        .nav-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .nav-link:hover {
+            border-color: var(--color-primary);
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;600&display=swap');
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <a href="index.html" class="nav-link">← Back to Game</a>
+
+        <h1>Scoundrel Strategy Guide</h1>
+        <p class="subtitle">Master the dungeon with these advanced tips and complete rule explanations.</p>
+
+        <h2>The Core Rules</h2>
+        <p>
+            Scoundrel is a deceptively simple game. You are an adventurer exploring a dungeon represented by a standard
+            deck of playing cards (minus the jokers).
+            Your goal is to traverse all the rooms (deal with all the cards) without your health dropping to zero.
+        </p>
+        <p>
+            You start with <strong class="ref-health">20 Health points</strong>.
+        </p>
+
+        <h3>The Room Mechanic</h3>
+        <p>
+            Cards are dealt in groups of <strong>four</strong>, representing a room in the dungeon. You cannot see what
+            is coming in the next room.
+            In each room, you must interact with (click/tap) at least <strong>three cards</strong>.
+        </p>
+        <p>
+            Once three cards are gone, the fourth card remains. You then deal three new cards from the deck to fill the
+            room back up to four.
+            This means you are constantly carrying one card forward, which is a key strategic element.
+        </p>
+
+        <div class="tip-box">
+            <span class="tip-title">Strategic Tip: The Run Action</span>
+            You can choose to <strong>Run</strong> (avoid a room) if you don't like the cards. This shuffles all four
+            currently visible cards back into the deck.
+            However, you cannot run from two consecutive rooms. Use this wisely!
+        </div>
+
+        <h2>Card Types Explained</h2>
+
+        <h3><span class="ref-monster">Monsters</span></h3>
+        <p>
+            Monsters (red-tinted cards) are your enemies. Their strength is simply their numeric value, ranging from
+            <strong>2 to 14</strong>.
+            Higher numbers represent stronger monsters.
+        </p>
+        <p>
+            <strong>Fighting Barehanded:</strong> If you don't have a weapon equipped, you take damage equal to the
+            monster's full value.
+            Fighting a <span class="ref-monster">14</span> barehanded implies taking 14 damage, which is often fatal.
+        </p>
+
+        <h3><span class="ref-weapon">Weapons</span></h3>
+        <p>
+            Weapons (blue-tinted cards) help you slay monsters. Their "attack power" is their face value (2-14).
+            Attacking a monster with a weapon subtracts the weapon's value from the monster's strength.
+        </p>
+        <ul>
+            <li>If Weapon > Monster: You take 0 damage.</li>
+            <li>If Weapon < Monster: You take the difference as damage.</li>
+        </ul>
+        <p>
+            <strong>Important Rule:</strong> When you use a weapon to kill a monster, it doesn't break immediately.
+            However, you can only use it again on a monster of <strong>equal or lower value</strong> than the previous
+            one you killed.
+        </p>
+
+        <h3><span class="ref-health">Health Potions</span></h3>
+        <p>
+            Potions (green-tinted cards) heal you. Their healing amount is their face value.
+            You can only drink <strong>one potion per room</strong>. If there are multiple potions in a room, only the
+            first potion used will be applied to you, the rest if used will not be applied in that same room.
+            Your max health depends on the difficulty (20 for Normal); any healing above this is wasted.
+        </p>
+
+        <h2>Winning Strategies</h2>
+
+        <h3>1. Weapon Chaining</h3>
+        <p>
+            The key to winning Scoundrel is "chaining" kills with your weapon. Since a used weapon can only kill equal
+            or weaker monsters,
+            you should try to kill high-level monsters first, then work your way down.
+        </p>
+        <p>
+            <em>Example:</em> You have a <span class="ref-weapon">10 Weapon</span>.
+            If you kill an 8 Monster, your weapon is now "bound" to max strength 8. You cannot use it on a 9 Monster
+            anymore.
+            Try to kill the strongest monsters possible with your strong weapons to get maximum value.
+        </p>
+
+        <h3>2. "Filtering" the Deck</h3>
+        <p>
+            Remember that you leave one card behind in every room. You can use this to your advantage.
+            If you have a <span class="ref-health">low potion (2 or 3)</span> that you don't need, leave it behind!
+            It will stay in the room while you deal 3 new cards. Strategy involves clearing the "bad" cards (monsters)
+            and keeping "good" cards (potions/weapons) available for when you really need them.
+        </p>
+
+        <h3>3. When to Barehand</h3>
+        <p>
+            Sometimes it is better to take 2 or 3 damage from a weak monster barehanded than to waste a high-level
+            weapon charge
+            or break a good weapon chain. Save your <span class="ref-weapon">High Value Weapons</span> for the strongest
+            monsters (11-14).
+        </p>
+
+        <div class="tip-box">
+            <span class="tip-title">The "Don't Heal" Rule</span>
+            Don't drink a potion just because you are missing 1 or 2 health.
+            Wait until you are lower. Wasting a <span class="ref-health">10 Potion</span> when you are at 18 Health is a
+            huge waste of resources.
+        </div>
+
+        <br>
+        <a href="index.html" class="nav-link" style="font-size: 1.2rem;">Play Scoundrel Now &rarr;</a>
+        <br><br><br>
+    </div>
+
+</body>
+
+</html>
