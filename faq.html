@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoundrel FAQ – Frequently Asked Questions About the Card Game</title>
+    <meta name="description"
+        content="Answers to common questions about Scoundrel card game. Learn about gameplay, rules, scoring, mobile support, offline play, and more." />
+    <link rel="canonical" href="https://scoundrelcardgame.net/faq.html" />
+    <link rel="icon" href="icons/webicon.png" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PTHG0M139J"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-PTHG0M139J', { anonymize_ip: true });
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type":"Question","name":"What is Scoundrel?","acceptedAnswer":{"@type":"Answer","text":"Scoundrel is a single-player roguelike dungeon-crawling card game created by Zach Gage and Kurt Bieg in 2011. It uses a modified standard deck of playing cards where you explore a dungeon, fight monsters, collect weapons, and use health potions to survive."}},
+            {"@type":"Question","name":"Can I play Scoundrel on my phone?","acceptedAnswer":{"@type":"Answer","text":"Yes! Scoundrel is fully responsive and works on any device with a modern web browser. You can also install it as a Progressive Web App on your home screen."}},
+            {"@type":"Question","name":"Is Scoundrel free to play?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free. No account, no download, and no payment required."}},
+            {"@type":"Question","name":"Can I play Scoundrel offline?","acceptedAnswer":{"@type":"Answer","text":"Yes. Scoundrel is a Progressive Web App (PWA). Install it on your device and play anytime without internet."}},
+            {"@type":"Question","name":"How is my score calculated?","acceptedAnswer":{"@type":"Answer","text":"If you clear the entire dungeon, your remaining health points become your score. Maximum possible score is 20."}},
+            {"@type":"Question","name":"What are the difficulty modes?","acceptedAnswer":{"@type":"Answer","text":"Easy (more forgiving), Normal (classic 20 HP), and Hard (tougher challenge for experienced players)."}},
+            {"@type":"Question","name":"How many cards are in the Scoundrel deck?","acceptedAnswer":{"@type":"Answer","text":"A modified 52-card deck with red face cards and red Aces removed."}},
+            {"@type":"Question","name":"Can I use a weapon on any monster?","acceptedAnswer":{"@type":"Answer","text":"Initially yes, but once used to defeat a monster, a weapon becomes bound and can only target monsters of equal or lower strength."}},
+            {"@type":"Question","name":"Why can I only drink one potion per room?","acceptedAnswer":{"@type":"Answer","text":"This is a core rule. Only one health potion per room (set of four cards)."}},
+            {"@type":"Question","name":"What does Avoid Room mean?","acceptedAnswer":{"@type":"Answer","text":"It shuffles all four visible cards back into the deck and deals a fresh room. You cannot avoid two rooms in a row."}},
+            {"@type":"Question","name":"Is this the official Scoundrel game?","acceptedAnswer":{"@type":"Answer","text":"This is an independent, fan-made web adaptation inspired by the original ruleset. Not affiliated with the original creators."}},
+            {"@type":"Question","name":"What browsers are supported?","acceptedAnswer":{"@type":"Answer","text":"All modern browsers: Chrome, Firefox, Safari, Edge, Opera, and mobile browsers."}}
+        ]
+    }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;600&display=swap');
+
+        :root {
+            --color-bg: #0a0a0f;
+            --color-surface: #14141e;
+            --color-text: #e5e7eb;
+            --color-text-muted: #9ca3af;
+            --color-primary: #fbbf24;
+            --font-main: 'Inter', system-ui, sans-serif;
+            --font-heading: 'Cinzel', serif
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-main);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem
+        }
+
+        h1,
+        h2 {
+            font-family: var(--font-heading);
+            color: #f3f4f6;
+            margin-top: 2rem;
+            margin-bottom: 1rem
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--color-primary);
+            margin-bottom: .5rem
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--color-text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.1rem
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 1px solid #374151;
+            padding-bottom: .5rem;
+            color: var(--color-primary)
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            color: var(--color-text-muted)
+        }
+
+        strong {
+            color: #f3f4f6
+        }
+
+        a {
+            color: var(--color-primary);
+            text-decoration: none
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        .nav-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            transition: border-color .2s
+        }
+
+        .nav-link:hover {
+            border-color: var(--color-primary)
+        }
+
+        .faq-item {
+            background: var(--color-surface);
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color .2s
+        }
+
+        .faq-item:hover {
+            border-color: #374151
+        }
+
+        .faq-question {
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #f3f4f6;
+            font-size: 1.05rem;
+            user-select: none
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-left: 1rem
+        }
+
+        .faq-item.open .faq-question::after {
+            content: '−'
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .3s ease, padding .3s ease;
+            padding: 0 1.5rem
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 500px;
+            padding: 0 1.5rem 1.2rem
+        }
+
+        .faq-answer p {
+            margin-bottom: 0
+        }
+
+        .page-footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            text-align: center;
+            color: var(--color-text-muted);
+            font-size: .9rem
+        }
+
+        .page-footer a {
+            color: var(--color-primary);
+            margin: 0 .5rem
+        }
+
+        .separator {
+            color: #374151
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="nav-link">← Back to Game</a>
+        <h1>Frequently Asked Questions</h1>
+
+        <div id="ntv_2103698"></div>
+        <script type="text/javascript">
+            (function (d) { var params = { bvwidgetid: "ntv_2103698", bvlinksownid: 2103698, rows: 1, cols: 5, textpos: "below", imagewidth: 120, mobilecols: 1, cb: (new Date()).getTime() }; params.bvwidgetid = "ntv_2103698" + params.cb; d.getElementById("ntv_2103698").id = params.bvwidgetid; var qs = Object.keys(params).reduce(function (a, k) { a.push(k + '=' + encodeURIComponent(params[k])); return a }, []).join(String.fromCharCode(38)); var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; var p = 'https:' == document.location.protocol ? 'https' : 'http'; s.src = p + "://cdn.hyperpromote.com/bidvertiser/tags/active/bdvws.js?" + qs; d.getElementById(params.bvwidgetid).appendChild(s) })(document);
+        </script>
+
+        <p class="subtitle">Everything you need to know about playing Scoundrel online.</p>
+
+        <h2>General</h2>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">What is Scoundrel?</div>
+            <div class="faq-answer">
+                <p>Scoundrel is a <strong>single-player roguelike dungeon-crawling card game</strong> created by Zach
+                    Gage and Kurt Bieg in 2011. It uses a modified standard deck of playing cards where you explore a
+                    dungeon, fight monsters, collect weapons, and use health potions to survive. This website lets you
+                    play it instantly in your browser.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Is Scoundrel free to play?
+            </div>
+            <div class="faq-answer">
+                <p>Yes, completely free. No account, no download, and no payment required. Just open the website and
+                    start playing.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Is this the official
+                Scoundrel game?</div>
+            <div class="faq-answer">
+                <p>This is an independent, fan-made web adaptation inspired by the original Scoundrel ruleset created by
+                    Zach Gage and Kurt Bieg. It is not affiliated with or endorsed by the original creators.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Who created Scoundrel?</div>
+            <div class="faq-answer">
+                <p>Scoundrel was designed by <strong>Zach Gage</strong> and <strong>Kurt Bieg</strong> during Train Jam
+                    in 2011 — a game jam held on the multi-day train ride from Chicago to the Game Developers Conference
+                    in San Francisco.</p>
+            </div>
+        </div>
+
+        <h2>Gameplay</h2>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">How do I play Scoundrel?
+            </div>
+            <div class="faq-answer">
+                <p>You start with 20 health. Cards are dealt four at a time to form a "room." You must interact with
+                    three of the four cards — fighting monsters, equipping weapons, or drinking potions. The fourth card
+                    carries over to the next room. Your goal is to clear the entire dungeon without your health reaching
+                    zero. Check our <a href="how-to-play.html">complete rules page</a> for detailed instructions.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">How is my score calculated?
+            </div>
+            <div class="faq-answer">
+                <p>If you clear the entire dungeon, your remaining health points become your score. The maximum possible
+                    score is 20. If your health drops to zero, you lose and do not receive a score.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">What does "Avoid Room" mean?
+            </div>
+            <div class="faq-answer">
+                <p>Avoiding a room shuffles all four visible cards back into the dungeon deck and deals a fresh room.
+                    However, you <strong>cannot avoid two rooms in a row</strong> — the button will be disabled if you
+                    just avoided the previous room.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Can I use a weapon on any
+                monster?</div>
+            <div class="faq-answer">
+                <p>When you first equip a weapon, yes. But once you use it to defeat a monster, it becomes
+                    <strong>"bound"</strong> — you can only use it on monsters of <strong>equal or lower
+                        strength</strong> than the last one defeated. See our <a href="guide.html">strategy guide</a>
+                    for weapon chaining tips.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Why can I only drink one
+                potion per room?</div>
+            <div class="faq-answer">
+                <p>This is a core rule. You may only consume one health potion per room (each set of four cards). Your
+                    health also cannot exceed your maximum (20 on Normal), so timing potion use is critical.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">What are the difficulty
+                modes?</div>
+            <div class="faq-answer">
+                <p><strong>Easy</strong> — more forgiving for beginners. <strong>Normal</strong> — the classic 20 HP
+                    experience. <strong>Hard</strong> — a tougher challenge for experienced players. Select difficulty
+                    on the main menu.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">How many cards are in the
+                deck?</div>
+            <div class="faq-answer">
+                <p>A modified 52-card deck. Red face cards (Hearts/Diamonds Jacks, Queens, Kings) and red Aces are
+                    removed before play, leaving monsters (black cards), weapons (Diamonds 2–10), and potions (Hearts
+                    2–10).</p>
+            </div>
+        </div>
+
+        <h2>Technical</h2>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Can I play on my phone?
+            </div>
+            <div class="faq-answer">
+                <p>Yes! Scoundrel is fully responsive and works on any device — smartphones, tablets, laptops, and
+                    desktops. The interface adapts automatically to your screen size.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Can I play offline?</div>
+            <div class="faq-answer">
+                <p>Yes! Scoundrel is a Progressive Web App (PWA). Install it via your browser's "Add to Home Screen"
+                    option and play anytime without an internet connection.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">What browsers are supported?
+            </div>
+            <div class="faq-answer">
+                <p>All modern browsers: <strong>Chrome, Firefox, Safari, Edge, Opera</strong>, and mobile browsers for
+                    Android and iOS.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Is my data collected?</div>
+            <div class="faq-answer">
+                <p>Only anonymous usage statistics via Google Analytics. We do <strong>not</strong> collect any
+                    personally identifiable information. No accounts, no logins. See our <a href="privacy.html">privacy
+                        policy</a>.</p>
+            </div>
+        </div>
+
+        <br>
+        <a href="index.html" class="nav-link" style="font-size: 1.2rem;">Play Scoundrel Now &rarr;</a>
+        <br><br><br>
+
+        <div id="ntv_2103698_bottom"></div>
+        <script type="text/javascript">
+            (function (d) { var params = { bvwidgetid: "ntv_2103698_bottom", bvlinksownid: 2103698, rows: 1, cols: 5, textpos: "below", imagewidth: 120, mobilecols: 1, cb: (new Date()).getTime() }; params.bvwidgetid = "ntv_2103698_bottom" + params.cb; d.getElementById("ntv_2103698_bottom").id = params.bvwidgetid; var qs = Object.keys(params).reduce(function (a, k) { a.push(k + '=' + encodeURIComponent(params[k])); return a }, []).join(String.fromCharCode(38)); var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; var p = 'https:' == document.location.protocol ? 'https' : 'http'; s.src = p + "://cdn.hyperpromote.com/bidvertiser/tags/active/bdvws.js?" + qs; d.getElementById(params.bvwidgetid).appendChild(s) })(document);
+        </script>
+        <SCRIPT data-cfasync="false" SRC="//bdv.bidvertiser.com/BidVertiser.dbm?pid=941478&bid=2103698"
+            TYPE="text/javascript"></SCRIPT>
+
+        <footer class="page-footer">
+            <a href="index.html">Play Game</a> <span class="separator">•</span>
+            <a href="how-to-play.html">Rules</a> <span class="separator">•</span>
+            <a href="guide.html">Strategy Guide</a> <span class="separator">•</span>
+            <a href="tips.html">Tips</a> <span class="separator">•</span>
+            <a href="about.html">About</a> <span class="separator">•</span>
+            <a href="history.html">History</a> <span class="separator">•</span>
+            <a href="contact.html">Contact</a> <span class="separator">•</span>
+            <a href="privacy.html">Privacy</a> <span class="separator">•</span>
+            <a href="terms.html">Terms</a>
+        </footer>
+    </div>
+</body>
+
+</html>
